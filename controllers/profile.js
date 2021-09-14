@@ -1,4 +1,4 @@
-const profile = (req, res) => {
+const profile = (req, res, db) => {
   const { id } = req.params;
   db('users').where({
     id: id
@@ -13,6 +13,6 @@ const profile = (req, res) => {
     .catch(_err => res.status(502).json('Internal Server Error'));
 }
 
-module.export = {
+module.exports = {
   profile: profile
-}
+};

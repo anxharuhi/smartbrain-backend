@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon",
-    "test": "nodemon test.js"
+    "development": "nodemon app.js --server server --port port --user user --password password --database database --listen port",
+    "test": "node test.js"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +17,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "knex": "^0.95.11",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "yargs": "^17.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

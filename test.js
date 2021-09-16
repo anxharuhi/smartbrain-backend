@@ -1,50 +1,16 @@
-const bcrypt = require('bcryptjs');
-const knex = require('knex');
-
-const salt = 10;
-const db = knex({
-  client: 'pg',
-  connection: {
-    host: 'localhost',
-    port: 5432,
-    user: 'development',
-    password: 'webdev',
-    database: 'smartbrain'
-  },
-})
-
-function transactionTest(email, name, password) {
-  db('login').insert({
-    hash: bcrypt.hashSync(password, salt),
-    email: email
-  }).catch(err => console.log("Error introducing password into the databsase. Error was: ", err));
-  db('users').insert({
-      name: name,
-      email: email,
-      joined: new Date()
-  }, ['*']).catch(err => console.log("Error introducing password into the databsase. Error was: ", err));
-};
-
-
-function transactionTest2(email, name, password) {
-
-  let knexTransaction = db.transaction((trx) => {
-    return trx('login').insert({
-        hash: bcrypt.hashSync(password, salt),
-        email: email
-      })
-      .catch(err => console.log('There was a login table error. The error was: \n', err))
-      .then(() => {
-        return trx('users').insert({
-          name: name,
-          email: email,
-          joined: new Date()
-        }, '*')})
-      .catch(err => console.log('There was a users table error. The error was: \n', err))
-  })
-  knexTransaction.then(user => console.log(user[0]))
-    .catch(err => console.log('There was an error. The error was: \n', err))
-}
-
-
-transactionTest2('doomguy@uac.space', 'Doomguy', 'cacodemon')
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const argv = yargs(hideBin(process.argv))
+  .usage('Usage: $0 [OPTIONS]')
+  .alias('h', 'help').describe('h', 'Show help')
+  .alias('s', 'server').describe('s', 'Location of the Postgre database')
+  .alias('p', 'port').describe('p', 'Port of the Postgre database')
+  .alias('u', 'user').describe('u', 'User to access the database')
+  .alias('k', 'password').describe('k', 'Password for the database user')
+  .alias('d', 'database').describe('d', 'Database name in the server')
+  .alias('i', 'install').describe('i', 'Install database schema (default false, TBI)').boolean('i')
+  .alias('v', 'version')
+  .demandOption(['server', 'port', 'user', 'password', 'database'])
+  .epilog('That\'s all folks!')
+  .argv
+console.log(argv)

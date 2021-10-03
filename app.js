@@ -40,8 +40,6 @@ const db = knex({
 app.use(express.json());
 app.use(cors());
 
-// FIX: Add data validation to prevent malicious attacks
-
 // Endpoints
 app.post('/signin',
   body('email').isEmail().normalizeEmail().trim().escape().stripLow(),
@@ -55,6 +53,7 @@ app.post('/register',
 app.get('/profile/:id',
   (req, res) => profile.profile(req, res, db))
 app.put('/image', (req, res) => image.image(req, res, db))
+app.post('/imageurl', (req, res) => image.apiCall(req, res))
 
 // NOTE: Remember to add the port to the console log
 app.listen(argv.listen, () => console.log(`Smartbrain api server is running on port ${argv.listen}`));

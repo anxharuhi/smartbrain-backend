@@ -17,8 +17,9 @@ const db = knex({
   client: 'pg',
   connection: {
     connectionString : DATABASE,
-    ssl: true,
-    rejectUnauthorized: false
+    ssl: {
+      rejectUnauthorized: false
+    }
   },
 });
 app.use(express.json());

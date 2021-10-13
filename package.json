@@ -4,9 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "nodemon"
->>>>>>> e123b1cd9d659239fd914064a9e5c1371194e0f8
+    "start": "node",
+    "start:dev": "nodemon"
   },
   "keywords": [],
   "author": "",

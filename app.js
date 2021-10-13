@@ -10,7 +10,7 @@ const image = require('./controllers/image')
 const app = express();
 
 // Eniromental variables
-const DATABASE = process.env.DATABASE
+const DATABASE = process.env.DATABASE_URL
 const PORT = process.env.PORT ? process.env.PORT : 3010
 
 const db = knex({
